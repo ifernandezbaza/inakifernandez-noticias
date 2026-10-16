@@ -1,5 +1,22 @@
 [
   {
+    "id": "2026-10-16-aws-security-agent-cves",
+    "date": "2026-10-16",
+    "time": "15:30",
+    "title": "AWS Security Agent explota 33 de 37 CVEs reales recientes de forma autónoma",
+    "summary": "El 15 de octubre de 2026 AWS publicó en su Security Blog los resultados de aplicar AWS Security Agent, ahora parte de AWS Continuum, a 37 CVEs reales y recientes empaquetados como objetivos vivos. El agente",
+    "body": "El 15 de octubre de 2026 AWS publicó en su Security Blog los resultados de aplicar AWS Security Agent, ahora parte de AWS Continuum, a 37 CVEs reales y recientes empaquetados como objetivos vivos. El agente partía de una posición no autenticada o de bajo privilegio, solo con la URL del endpoint y una pista de una línea, sin exploit ni PoC previo. Debía descubrir la vulnerabilidad, construir un exploit funcional, encadenar primitivas cuando fuera necesario y extraer una bandera oculta en el sumidero previsto.\n\nLos resultados son claros: capturó 35 de 37 banderas. Tras una auditoría de integridad por muestra frente al PoC canónico, 33 de 37 (89,2 %) lo hicieron por la vulnerabilidad prevista de extremo a extremo. Dos capturas se reclasificaron porque el agente llegó por un camino no previsto (una enumeración de red propia en un SSRF y un volcado de entorno en un crash de SQL injection). Las otras dos fueron fallos genuinos: el agente explotó el bug pero dejó el objetivo fuera de servicio antes de poder leer la bandera.\n\nEl benchmark se construyó para reducir la contaminación. Los suites públicos se saturan porque los modelos acaban memorizando los write-ups. Aquí los CVEs son recientes (2025-2026), no se permite buscar PoCs en tiempo de ejecución y cada victoria se audita. Cubren ocho clases: inyección de comandos o código a RCE, XSS para robar cookie de admin, autenticación o control de acceso rotos, SQL injection, SSRF, lógica de negocio, subida de ficheros a RCE y path traversal, entre otras. El tiempo mediano hasta captura fue de unas cuatro horas.\n\nEl pipeline incluye crawler, agentes especialistas, validación independiente de hallazgos, agente de explotación con shell, Python, navegador real y listener out-of-band, comprobación de bandera y auditoría final. Además de los CVEs sembrados, el validador confirmó 234 hallazgos de alta confianza y filtró 159 falsos positivos propios, lo que demuestra que la capa de validación es útil.\n\nPara un responsable TIC la lectura es doble. Por un lado, un agente autónomo ya alcanza tasas altas de explotación real sobre software que corre en producción (frameworks web, registros de contenedores, plataformas ML, APIs tRPC, consolas LDAP). Eso acorta el tiempo entre divulgación y exploit usable y eleva el valor de parchear rápido las clases de vulnerabilidad más comunes. Por otro, el propio artículo documenta el riesgo de destrucción: sin guardrails no destructivos el agente puede dejar el servicio inoperativo. AWS trabaja en limitación de operaciones destructivas, preferencia por pruebas de solo lectura y recuperación de salud del objetivo.\n\nEn la práctica conviene tres pasos. Primero, tratar los agentes de pentesting autónomos como una capacidad que ya existe y que los atacantes también pueden usar; priorizar el parcheo de RCE, XSS almacenado y controles de acceso rotos no es opcional. Segundo, si se evalúa o se contrata este tipo de servicio, exigir que demuestre el impacto sin degradar el entorno y que el alcance esté limitado de forma técnica, no solo contractual. Tercero, mantener la higiene básica que sigue siendo el vector más barato: secretos fuera del código, mínimo privilegio en roles cloud, APIs de prueba desactivadas y monitorización de anomalías en endpoints internos.\n\nEl resultado no es un anuncio de producto milagroso. Es una medición honesta de lo que un agente bien instrumentado logra hoy sobre vulnerabilidades reales y recientes, y de los guardrails que hacen falta para usarlo sin causar más daño del que pretende evitar.",
+    "source": "AWS Security Blog",
+    "sourceUrl": "https://aws.amazon.com/blogs/security/aws-security-agent-now-part-of-aws-continuum-exploited-33-of-37-new-real-world-cves/",
+    "tags": [
+      "inteligencia artificial",
+      "ciberseguridad",
+      "aws",
+      "pentesting"
+    ],
+    "slug": "aws-security-agent-cves"
+  },
+  {
     "id": "2026-10-15-microsoft-phishing-ecosistema",
     "date": "2026-10-15",
     "time": "15:30",
